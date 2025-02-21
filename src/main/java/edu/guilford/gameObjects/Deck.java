@@ -1,4 +1,4 @@
-package edu.guilford;
+package edu.guilford.gameObjects;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -42,6 +42,10 @@ public class Deck {
         return picked;
     }
 
+    public Card peek(int i) {
+        return deck.get(i);
+    }
+
     public Card deal() {
         return deck.remove(0);
     }
@@ -56,5 +60,14 @@ public class Deck {
             deckString += card.toString() + "\n";
         }
         return deckString;
+    }
+
+    // Adding cards methods
+    public void addBottom(Card card) {
+        deck.add(card);
+    }
+
+    public void addTop(Card card) {
+        deck.add(0, card);
     }
 }
