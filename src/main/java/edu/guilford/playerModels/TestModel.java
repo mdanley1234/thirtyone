@@ -21,13 +21,13 @@ public class TestModel extends Player {
     }
 
     @Override
-    public boolean requestKnock(int turnNumber) {
+    public boolean requestKnock() {
+        turnCounter++;
 
         // Test model knocks after turn 3
-        if (turnNumber > 3) {
+        if (turnCounter > 3) {
             knock = true;
         }
-
         return knock;
     }
     

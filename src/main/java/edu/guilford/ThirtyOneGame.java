@@ -24,11 +24,12 @@ public class ThirtyOneGame {
         }
     }
 
-    private void playRound() {
+    public void playRound() {
         resetGame();
         Player player = playerGroup.getNextPlayer();
         while (playTurn(player)) {
             player = playerGroup.getNextPlayer();
+            // System.out.println(player.toString());
         }
 
         // Compile points and remove losing player
@@ -42,6 +43,10 @@ public class ThirtyOneGame {
                 minPlayer = thePlayer;
             }
         }
+
+        //TODO
+        System.out.println(minPlayer.toString());
+        System.out.println(knockPlayer.toString());
 
         // Remove lives from losing player
         if (minPlayer == knockPlayer) {
@@ -70,9 +75,11 @@ public class ThirtyOneGame {
         if (playerGroup.knockComplete()) {
             return false;
         }
-        else if (player.requestKnock(turnNumber) && !playerGroup.knockStarted()) {
-            knockPlayer = player;
-            return true; 
+        else if (!playerGroup.knockStarted()) {
+            if (player.requestKnock()) {
+                knockPlayer = player;
+                return true; 
+            }
         }
 
         // Draw card

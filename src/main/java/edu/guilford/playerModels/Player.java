@@ -19,6 +19,9 @@ public abstract class Player {
     /** Indicates whether the player has knocked. */
     protected boolean knock = false;
 
+    /** Turn counter */
+    protected int turnCounter = 0;
+
     /**
      * Enumeration for deck types in the game: draw deck or discard deck.
      */
@@ -56,7 +59,8 @@ public abstract class Player {
      * @param turnNumber the current turn number
      * @return {@code true} if the player knocks, otherwise {@code false}
      */
-    public boolean requestKnock(int turnNumber) {
+    public boolean requestKnock() {
+        turnCounter++;
         return knock;
     }
 
@@ -103,6 +107,7 @@ public abstract class Player {
     public void clearHand() {
         hand.reset();
         knock = false;
+        turnCounter = 0;
     }
 
     /**

@@ -39,7 +39,7 @@ public class DrawDeck {
      *
      * @return the card at the front of the deck, or null if the deck is empty
      */
-    public Card poll() {
+    public Card deal() {
         return cardQueue.poll();
     }
 
@@ -49,7 +49,7 @@ public class DrawDeck {
      * @return the card at the front of the deck
      * @throws NoSuchElementException if the deck is empty
      */
-    public Card deal() {
+    public Card element() {
         return cardQueue.element();
     }
 
