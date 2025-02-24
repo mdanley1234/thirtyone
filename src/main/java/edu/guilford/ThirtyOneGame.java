@@ -1,148 +1,130 @@
-// package edu.guilford;
+package edu.guilford;
 
-// import java.util.ArrayList;
-// import java.util.HashMap;
+import edu.guilford.gameObjects.DiscardDeck;
+import edu.guilford.gameObjects.DrawDeck;
+import edu.guilford.playerModels.Group;
+import edu.guilford.playerModels.Player;
 
-// import edu.guilford.gameObjects.Deck;
-// import edu.guilford.playerModels.Player;
-// import edu.guilford.playerModels.Player.Discard;
-// import edu.guilford.playerModels.Player.Draw;
-
-// public class ThirtyOneGame {
+public class ThirtyOneGame {
     
-//     private Deck drawDeck; // Draw deck
-//     private Deck discardDeck; // Discard deck
-//     private ArrayList<Player> players; // Game players
-//     private HashMap<Player, Boolean> playerKnocks = new HashMap<>(); // Checks for knocked players
-//     private int turnNumber = 0; // Turn number in game
+    private DrawDeck drawDeck; // Draw deck
+    private DiscardDeck discardDeck; // Discard deck
+    private Group playerGroup; // Game players
+    private int turnNumber = 0; // Turn number in game
+    private Player knockPlayer; // The player that knocks
 
-//     public ThirtyOneGame(ArrayList<Player> players) {
-//         drawDeck = new Deck();
-//         discardDeck = new Deck();
-//         this.players = players;
+    public ThirtyOneGame(Group playerGroup) {
+        drawDeck = new DrawDeck();
+        discardDeck = new DiscardDeck();
+        this.playerGroup = playerGroup;
 
-//         // Max player count of 16
-//         if (players.size() > 16) {
-//             throw new IllegalArgumentException("Number of players cannot exceed 16.");
-//         }
-//     }
+        // Max player count of 16
+        if (playerGroup.size() > 16) {
+            throw new IllegalArgumentException("Number of players cannot exceed 16.");
+        }
+    }
 
-//     private void playRound() {
-//         resetGame();
-//         int playerIndex = 0;
-//         Player player = players.get(playerIndex);
-//         while (playTurn(player)) {
-//             playerIndex++;
-//             if (playerIndex == players.size()) {
-//                 playerIndex = 0;
-//                 turnNumber++;
-//             }
-//             player = players.get(playerIndex);
-//         }
+    private void playRound() {
+        resetGame();
+        Player player = playerGroup.getNextPlayer();
+        while (playTurn(player)) {
+            player = playerGroup.getNextPlayer();
+        }
 
-//         // TODO: End game (Double penalty for knock player)
-//     }
+        // Compile points and remove losing player
+        int minScore = 31;
+        Player minPlayer = playerGroup.getNextPlayer();
+    
+        for (int i = 0; i < playerGroup.size(); i++) {
+            Player thePlayer = playerGroup.getNextPlayer();
+            if (thePlayer.getHandValue() < minScore) {
+                minScore = thePlayer.getHandValue();
+                minPlayer = thePlayer;
+            }
+        }
 
-//     // Single turn for one player (Return false to end round)
-//     private boolean playTurn(Player player) {
+        // Remove lives from losing player
+        if (minPlayer == knockPlayer) {
+            minPlayer.removeLives(2);
+        }
+        else {
+            minPlayer.removeLives();
+        }
+    }
 
-//         // Check for empty discard and deck
-//         if (discardDeck.size() == 0) {
-//             discardDeck.addTop(drawDeck.deal());
-//         }
-//         else if (drawDeck.size() == 0) {
-//             while (discardDeck.size() > 1) {
-//                 drawDeck.addBottom(discardDeck.deal());
-//             }
-//             drawDeck.shuffle();
-//         }
+    // Single turn for one player (Return false to end round)
+    private boolean playTurn(Player player) {
 
-//         // Check for round end or player knocks
-//         if (playerKnocks.get(player)) {
-//             return false;
-//         }
-//         else if (player.requestKnock(turnNumber)) {
-//             playerKnocks.put(player, true);
-//             return true;
-//         }
+        // Check for empty discardDeck or drawDeck
+        if (discardDeck.size() == 0) {
+            discardDeck.push(drawDeck.deal());
+        }
+        else if (drawDeck.size() == 0) {
+            while (discardDeck.size() > 1) {
+                drawDeck.add(discardDeck.pop());
+            }
+            drawDeck.shuffle();
+        }
 
-//         Draw draw = player.requestDraw(discardDeck.peek(0));
-//         switch (draw) {
-//             case DECK:
-//                 player.addCard(drawDeck.deal());    
-//                 break;
-//             case DISCARD:
-//                 player.addCard(discardDeck.deal());
-//                 break;
-//         }
+        // If all players are knocked end round or if a player starts a knock begin knocking sequence
+        if (playerGroup.knockComplete()) {
+            return false;
+        }
+        else if (player.requestKnock(turnNumber) && !playerGroup.knockStarted()) {
+            knockPlayer = player;
+            return true; 
+        }
 
-//         Discard discard = player.requestDiscardLocation(discardDeck.peek(0));
-//         switch (discard) {
-//             case DECK -> {
-//                 drawDeck.addBottom(player.requestDiscardCard());
-//                 player.removeCard(player.requestDiscardCard());
-//             }
-//             case DISCARD -> {
-//                 discardDeck.addTop(player.requestDiscardCard());
-//                 player.removeCard(player.requestDiscardCard());
-//             }
-//         }
+        // Draw card
+        Player.Deck drawDeckLocation = player.requestDrawLocation(discardDeck.peek());
+        switch (drawDeckLocation) {
+            case DRAW -> player.addCard(drawDeck.deal());
+            case DISCARD -> player.addCard(discardDeck.pop());
+        }
 
-//         // Check if knocking sequence is active
-//         if (isKnock()) {
-//             playerKnocks.put(player, true);
-//         }
+        // Discard card
+        Player.Deck discardDeckLocation = player.requestDiscardLocation(discardDeck.peek());
+        switch (discardDeckLocation) {
+            case DRAW -> {
+                drawDeck.add(player.requestDiscardCard());
+                player.removeCard(player.requestDiscardCard());
+            }
+            case DISCARD -> {
+                discardDeck.push(player.requestDiscardCard());
+                player.removeCard(player.requestDiscardCard());
+            }
+        }
 
-//         return true;
-//     }
+        // Check if knocking sequence is active
+        if (playerGroup.knockStarted()) {
+            player.setKnock(true);
+        }
 
-//     private void resetGame() {
-//         // Reset player hands
-//         for (Player player : players) {
-//             player.clearHand();
-//         }
+        return true;
+    }
 
-//         // Reset decks
-//         discardDeck.clear();
-//         dealCards();
+    // Resets round and deals cards
+    private void resetGame() {
+        // Reset player hands
+        playerGroup.resetPlayers();
 
-//         // Reset turn number
-//         turnNumber = 0;
+        // Deal cards (Also resets decks)
+        dealCards();
 
-//         // Reset knocks to false
-//         for (Player player : players) {
-//             playerKnocks.put(player, false);
-//         }
-//     }
+        // Reset turn number
+        turnNumber = 0;
+    }
 
-//     // Resets and reshuffles deck, then deals the cards to each player in the list
-//     private void dealCards() {
-//         drawDeck.clear();
-//         drawDeck.build();
-//         drawDeck.shuffle();
+    // Resets and reshuffles deck, then deals the cards to each player in the list
+    private void dealCards() {
+        discardDeck.clear();
+        drawDeck.clear();
+        drawDeck.build();
+        drawDeck.shuffle();
 
-//         // Deal cards
-//         for (Player player : players) {
-//             player.addCard(drawDeck.deal());
-//         }
+        // Deal cards
+        playerGroup.dealCards(drawDeck);
+        discardDeck.push(drawDeck.deal());
+    }
 
-//         // Add first card to discard
-//         discardDeck.addTop(drawDeck.deal());
-//     }
-
-//     // Checks if any player has knocked
-//     private boolean isKnock() {
-//         for (Player player : players) {
-//             if (playerKnocks.get(player)) {
-//                 return true;
-//             }
-//         }
-//         return false;
-//     }
-
-//     // @Override
-//     // public String toString() {
-//     //     // TODO:
-//     // }
-
-// }
+}

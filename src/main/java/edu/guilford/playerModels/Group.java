@@ -2,6 +2,8 @@ package edu.guilford.playerModels;
 
 import java.util.ArrayList;
 
+import edu.guilford.gameObjects.DrawDeck;
+
 // Holds a group of Player objects in a list
 public class Group {
     
@@ -89,6 +91,26 @@ public class Group {
             }
         }
         return false;
+    }
+
+    // Return number of players
+    public int size() {
+        return players.size();
+    }
+
+    // Deal 3 cards to each player from drawDeck
+    public void dealCards(DrawDeck drawDeck) {
+        for (int i = 0; i < 3; i++) {
+            for (Player player : players) {
+                player.addCard(drawDeck.deal());
+            }
+        }
+
+    }
+
+    // Get player list
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
 }

@@ -1,12 +1,12 @@
 package edu.guilford;
 
 import edu.guilford.playerModels.Group;
-import edu.guilford.playerModels.PlayerModelA;
+import edu.guilford.playerModels.TestModel;
 
 public class ThirtyOneDriver {
     public static void main(String[] args) {
-        PlayerModelA player1 = new PlayerModelA();
-        PlayerModelA player2 = new PlayerModelA();
+        TestModel player1 = new TestModel();
+        TestModel player2 = new TestModel();
         Group group = new Group();
         group.addPlayer(player1);
         group.addPlayer(player2);

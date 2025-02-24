@@ -70,6 +70,15 @@ public abstract class Player {
     }
 
     /**
+     * Set the knock value
+     * 
+     * @param knock
+     */
+    public void setKnock(boolean knock) {
+        this.knock = knock;
+    }
+
+    /**
      * Adds a card to the player's hand.
      * 
      * @param card the card to be added

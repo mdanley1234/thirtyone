@@ -2,7 +2,8 @@ package edu.guilford.playerModels;
 
 import edu.guilford.gameObjects.Card;
 
-public class PlayerModelA extends Player {
+// Test model
+public class TestModel extends Player {
 
     @Override
     public Deck requestDrawLocation(Card discardCard) {
@@ -17,6 +18,17 @@ public class PlayerModelA extends Player {
     @Override
     public Card requestDiscardCard() {
         return hand.getCard(0);
+    }
+
+    @Override
+    public boolean requestKnock(int turnNumber) {
+
+        // Test model knocks after turn 3
+        if (turnNumber > 3) {
+            knock = true;
+        }
+
+        return knock;
     }
     
 }
