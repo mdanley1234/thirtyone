@@ -11,7 +11,7 @@ public class TestModel extends Player {
     }
 
     @Override
-    public Deck requestDiscardLocation(Card discardCard) {
+    public Deck requestDiscardLocation() {
         return Deck.DISCARD;
     }
 

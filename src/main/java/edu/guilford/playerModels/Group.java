@@ -113,4 +113,27 @@ public class Group {
         return players;
     }
 
+    // Returns players remaining in game
+    public int playersRemaining() {
+        int playersRemain = 0;
+        for (Player player : players) {
+            if (player.getLives() > 0) {
+                playersRemain++;
+            }
+        }
+        return playersRemain;
+    }
+
+    // Get winning player
+    public int getWinner() {
+        if (playersRemaining() == 1) {
+            for (int i = 0; i < players.size(); i++) {
+                if (players.get(i).getLives() > 0) {
+                    return i + 1;
+                }
+            }
+        }
+        return -1;
+    }
+
 }

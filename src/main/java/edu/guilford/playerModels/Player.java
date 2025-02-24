@@ -41,10 +41,9 @@ public abstract class Player {
     /**
      * Determines where the player wants to discard a card.
      * 
-     * @param discardCard the top card of the discard pile
      * @return the deck where the player chooses to discard (DRAW or DISCARD)
      */
-    public abstract Deck requestDiscardLocation(Card discardCard);
+    public abstract Deck requestDiscardLocation();
 
     /**
      * Determines which card the player wants to discard.

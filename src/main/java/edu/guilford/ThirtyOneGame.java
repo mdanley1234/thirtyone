@@ -24,12 +24,17 @@ public class ThirtyOneGame {
         }
     }
 
+    public void playGame() {
+        while (playerGroup.playersRemaining() > 1) {
+            playRound();
+        }
+    }
+
     public void playRound() {
         resetGame();
         Player player = playerGroup.getNextPlayer();
         while (playTurn(player)) {
             player = playerGroup.getNextPlayer();
-            // System.out.println(player.toString());
         }
 
         // Compile points and remove losing player
@@ -43,10 +48,6 @@ public class ThirtyOneGame {
                 minPlayer = thePlayer;
             }
         }
-
-        //TODO
-        System.out.println(minPlayer.toString());
-        System.out.println(knockPlayer.toString());
 
         // Remove lives from losing player
         if (minPlayer == knockPlayer) {
@@ -90,7 +91,7 @@ public class ThirtyOneGame {
         }
 
         // Discard card
-        Player.Deck discardDeckLocation = player.requestDiscardLocation(discardDeck.peek());
+        Player.Deck discardDeckLocation = player.requestDiscardLocation();
         switch (discardDeckLocation) {
             case DRAW -> {
                 drawDeck.add(player.requestDiscardCard());
