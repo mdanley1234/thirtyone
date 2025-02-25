@@ -1,0 +1,139 @@
+31 Card Game Program Testing:
+Initial Player Group
+Player 1) Lives: 3 | Hand Value: 0
+Player 2) Lives: 3 | Hand Value: 0
+Player 3) Lives: 3 | Hand Value: 0
+Player 4) Lives: 3 | Hand Value: 0
+Player 5) Lives: 3 | Hand Value: 0
+
+Next Round:
+Player 1) Lives: 3 | Hand Value: 8
+Player 2) Lives: 3 | Hand Value: 9
+Player 3) Lives: 3 | Hand Value: 19
+Player 4) Lives: 2 | Hand Value: 6
+Player 5) Lives: 3 | Hand Value: 10
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 3 | Hand Value: 10
+Player 2) Lives: 3 | Hand Value: 18
+Player 3) Lives: 3 | Hand Value: 14
+Player 4) Lives: 1 | Hand Value: 10
+Player 5) Lives: 3 | Hand Value: 16
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 3 | Hand Value: 11
+Player 2) Lives: 3 | Hand Value: 11
+Player 3) Lives: 3 | Hand Value: 15
+Player 4) Lives: 1 | Hand Value: 17
+Player 5) Lives: 2 | Hand Value: 10
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 2 | Hand Value: 11
+Player 2) Lives: 3 | Hand Value: 15
+Player 3) Lives: 3 | Hand Value: 13
+Player 4) Lives: 1 | Hand Value: 20
+Player 5) Lives: 2 | Hand Value: 13
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 2 | Hand Value: 10
+Player 2) Lives: 3 | Hand Value: 13
+Player 3) Lives: 3 | Hand Value: 10
+Player 4) Lives: 1 | Hand Value: 17
+Player 5) Lives: 1 | Hand Value: 10
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 2 | Hand Value: 11
+Player 2) Lives: 3 | Hand Value: 11
+Player 3) Lives: 3 | Hand Value: 17
+Player 4) Lives: 0 | Hand Value: 9
+Player 5) Lives: 1 | Hand Value: 17
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 1 | Hand Value: 11
+Player 2) Lives: 3 | Hand Value: 16
+Player 3) Lives: 3 | Hand Value: 11
+Player 4) Lives: 0 | Hand Value: 10
+Player 5) Lives: 1 | Hand Value: 20
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 0 | Hand Value: 10
+Player 2) Lives: 3 | Hand Value: 10
+Player 3) Lives: 3 | Hand Value: 21
+Player 4) Lives: 0 | Hand Value: 11
+Player 5) Lives: 1 | Hand Value: 11
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 0 | Hand Value: 10
+Player 2) Lives: 3 | Hand Value: 17
+Player 3) Lives: 2 | Hand Value: 5
+Player 4) Lives: 0 | Hand Value: 10
+Player 5) Lives: 1 | Hand Value: 10
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 0 | Hand Value: 11
+Player 2) Lives: 3 | Hand Value: 16
+Player 3) Lives: 2 | Hand Value: 18
+Player 4) Lives: 0 | Hand Value: 8
+Player 5) Lives: 0 | Hand Value: 10
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 0 | Hand Value: 17
+Player 2) Lives: 3 | Hand Value: 20
+Player 3) Lives: 1 | Hand Value: 11
+Player 4) Lives: 0 | Hand Value: 14
+Player 5) Lives: 0 | Hand Value: 13
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 0 | Hand Value: 10
+Player 2) Lives: 1 | Hand Value: 10
+Player 3) Lives: 1 | Hand Value: 10
+Player 4) Lives: 0 | Hand Value: 10
+Player 5) Lives: 0 | Hand Value: 11
+
+Press Enter to continue to the next round...
+
+Next Round:
+Player 1) Lives: 0 | Hand Value: 17
+Player 2) Lives: 0 | Hand Value: 10
+Player 3) Lives: 1 | Hand Value: 12
+Player 4) Lives: 0 | Hand Value: 21
+Player 5) Lives: 0 | Hand Value: 8
+
+Press Enter to continue to the next round...
+
+The winning player is player number 3
+
+1000 Testing of BasicModel (player 5) against 4 TestModels (players 1-4)
+Statistics after 1000 games:
+Player 1 wins: 0
+Player 2 wins: 1
+Player 3 wins: 0
+Player 4 wins: 0
+Player 5 wins: 999
+
+1000 Testing of BasicModel & AdvancedModel (players 1-3, 4-6)
+Statistics after 1000 games:
+BasicModel (players 1-3) wins: 110
+AdvancedModel (players 4-6) wins: 890

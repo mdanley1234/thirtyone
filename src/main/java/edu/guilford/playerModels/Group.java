@@ -1,48 +1,66 @@
 package edu.guilford.playerModels;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import edu.guilford.gameObjects.DrawDeck;
 
-// Holds a group of Player objects in a list
+/**
+ * The Group class manages a list of Player objects, facilitating player turns,
+ * dealing cards, and determining game state conditions.
+ */
 public class Group {
     
     private ArrayList<Player> players = new ArrayList<>();
-    private int playerCounter = 0; // Returns nth player in players list
+    private int playerCounter = 0; // Tracks the current player index
 
-    // Constructor assigning players
+    /**
+     * Constructs a Group with a predefined list of players.
+     *
+     * @param players the list of players to be included in the group
+     */
     public Group(ArrayList<Player> players) {
         this.players = players;
     }
 
-    // Constructor that takes a Player class and a number
+    /**
+     * Constructs a Group with a specified number of players of a given type.
+     *
+     * @param playerClass the class type of the players
+     * @param numberOfPlayers the number of players to create
+     */
     public Group(Class<? extends Player> playerClass, int numberOfPlayers) {
         try {
             for (int i = 0; i < numberOfPlayers; i++) {
                 players.add(playerClass.getDeclaredConstructor().newInstance());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (IllegalAccessException | IllegalArgumentException | InstantiationException | NoSuchMethodException | SecurityException | InvocationTargetException e) {}
     }
 
-    // Constructor (Empty)
+    /**
+     * Constructs an empty Group with no players.
+     */
     public Group() {}
 
-    // Get next player with lives > 0
+    /**
+     * Retrieves the next player who is still in the game (has remaining lives).
+     *
+     * @return the next active player
+     */
     public Player getNextPlayer() {
-        // Increment to next alive player
         do {
             playerCounter++;
             if (playerCounter == players.size()) {
-            playerCounter = 0;
+                playerCounter = 0;
             }
         } while (players.get(playerCounter).getLives() == 0);
 
         return players.get(playerCounter);
     }
 
-    // Reset players (and counter)
+    /**
+     * Resets all players by clearing their hands and resetting the player counter.
+     */
     public void resetPlayers() {
         for (Player player : players) {
             player.clearHand();
@@ -50,7 +68,11 @@ public class Group {
         playerCounter = 0;
     }
 
-    // Add a player
+    /**
+     * Adds a player to the group.
+     *
+     * @param player the player to add
+     */
     public void addPlayer(Player player) {
         players.add(player);
     }
@@ -66,14 +88,18 @@ public class Group {
         int playerNumber = 1;
         for (Player player : players) {
             sb.append(String.format("Player %d) ", playerNumber))
-            .append(player.toString())
-            .append(System.lineSeparator());
+              .append(player.toString())
+              .append(System.lineSeparator());
             playerNumber++;
         }
         return sb.toString();
     }
 
-    // All knock check
+    /**
+     * Checks if all remaining players have knocked, indicating the end of the round.
+     *
+     * @return {@code true} if all active players have knocked, otherwise {@code false}
+     */
     public boolean knockComplete() {
         for (Player player : players) {
             if (!player.getKnock() && player.getLives() > 0) {
@@ -83,7 +109,11 @@ public class Group {
         return true;
     }
 
-    // Any knock check
+    /**
+     * Checks if any player has knocked, indicating the start of the final turn.
+     *
+     * @return {@code true} if at least one player has knocked, otherwise {@code false}
+     */
     public boolean knockStarted() {
         for (Player player : players) {
             if (player.getKnock() && player.getLives() > 0) {
@@ -93,27 +123,42 @@ public class Group {
         return false;
     }
 
-    // Return number of players
+    /**
+     * Returns the number of players in the group.
+     *
+     * @return the number of players
+     */
     public int size() {
         return players.size();
     }
 
-    // Deal 3 cards to each player from drawDeck
+    /**
+     * Deals three cards to each player from the draw deck.
+     *
+     * @param drawDeck the deck from which cards are drawn
+     */
     public void dealCards(DrawDeck drawDeck) {
         for (int i = 0; i < 3; i++) {
             for (Player player : players) {
-                player.addCard(drawDeck.deal());
+                player.addCard(drawDeck.poll());
             }
         }
-
     }
 
-    // Get player list
+    /**
+     * Retrieves the list of players in the group.
+     *
+     * @return the list of players
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    // Returns players remaining in game
+    /**
+     * Returns the number of players still in the game (players with remaining lives).
+     *
+     * @return the count of players still active
+     */
     public int playersRemaining() {
         int playersRemain = 0;
         for (Player player : players) {
@@ -124,7 +169,11 @@ public class Group {
         return playersRemain;
     }
 
-    // Get winning player
+    /**
+     * Determines the winner of the game. The winner is the last player remaining.
+     *
+     * @return the winning player's index (1-based), or -1 if there is no single winner
+     */
     public int getWinner() {
         if (playersRemaining() == 1) {
             for (int i = 0; i < players.size(); i++) {
@@ -135,5 +184,4 @@ public class Group {
         }
         return -1;
     }
-
 }

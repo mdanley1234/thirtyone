@@ -2,35 +2,65 @@ package edu.guilford.gameObjects;
 
 import java.util.Stack;
 
+/**
+ * The DiscardDeck class represents a stack-based discard pile for a card game.
+ * It provides methods to push, pop, peek, check emptiness, get size, and clear the deck.
+ */
 public class DiscardDeck {
-    private Stack<Card> cardStack = new Stack<>();
+    
+    /**
+     * Stack to store discarded cards.
+     */
+    private final Stack<Card> cardStack = new Stack<>();
 
-    // Push a card onto the discard deck
+    /**
+     * Pushes a card onto the discard deck.
+     * 
+     * @param card The card to be added to the discard deck.
+     */
     public void push(Card card) {
         cardStack.push(card);
     }
 
-    // Pop a card from the discard deck
+    /**
+     * Pops a card from the discard deck.
+     * 
+     * @return The top card from the discard deck.
+     */
     public Card pop() {
         return cardStack.pop();
     }
 
-    // Peek at the top card of the discard deck without removing it
+    /**
+     * Peeks at the top card of the discard deck without removing it.
+     * 
+     * @return The top card from the discard deck.
+     */
     public Card peek() {
         return cardStack.peek();
     }
 
-    // Check if the discard deck is empty
+    /**
+     * Checks if the discard deck is empty.
+     * 
+     * @return true if the discard deck is empty, false otherwise.
+     */
     public boolean isEmpty() {
         return cardStack.isEmpty();
     }
 
-    // Get the size of the discard deck
+    /**
+     * Gets the size of the discard deck.
+     * 
+     * @return The number of cards in the discard deck.
+     */
     public int size() {
         return cardStack.size();
     }
 
-    // Clear the discard deck
+    /**
+     * Clears the discard deck.
+     */
     public void clear() {
         cardStack.clear();
     }
